@@ -1,0 +1,63 @@
+Add-Type -AssemblyName System.Drawing
+
+$image = New-Object System.Drawing.Bitmap 1600, 1050
+$g = [System.Drawing.Graphics]::FromImage($image)
+$g.Clear([System.Drawing.Color]::FromArgb(248, 250, 252))
+$title = New-Object System.Drawing.Font('Arial', 28, [System.Drawing.FontStyle]::Bold)
+$heading = New-Object System.Drawing.Font('Arial', 15, [System.Drawing.FontStyle]::Bold)
+$text = New-Object System.Drawing.Font('Arial', 13)
+$mono = New-Object System.Drawing.Font('Consolas', 11)
+$dark = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(15, 23, 42))
+$muted = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(71, 85, 105))
+$orange = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(234, 88, 12))
+$blue = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(37, 99, 235))
+$green = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(22, 163, 74))
+$border = New-Object System.Drawing.Pen([System.Drawing.Color]::FromArgb(203, 213, 225), 2)
+
+$g.DrawString('Sitemap Portal Berita', $title, $dark, 60, 42)
+$g.DrawString('BeritaFomo - struktur navigasi aplikasi Next.js', $text, $muted, 62, 90)
+
+$publicArea = New-Object System.Drawing.Rectangle 60, 150, 700, 810
+$adminArea = New-Object System.Drawing.Rectangle 820, 150, 720, 810
+$g.FillRectangle([System.Drawing.Brushes]::White, $publicArea)
+$g.DrawRectangle($border, $publicArea)
+$g.FillRectangle([System.Drawing.Brushes]::White, $adminArea)
+$g.DrawRectangle($border, $adminArea)
+
+$g.DrawString('SITUS PUBLIK', $heading, $orange, 90, 180)
+$g.DrawString('Beranda', $heading, $dark, 110, 235)
+$g.DrawString('/', $mono, $muted, 110, 265)
+$g.DrawString('|-- Kategori teknologi', $text, $dark, 140, 325)
+$g.DrawString('/kategori/teknologi', $mono, $muted, 170, 350)
+$g.DrawString('|-- Kategori tren dan viral', $text, $dark, 140, 410)
+$g.DrawString('/kategori/tren-viral', $mono, $muted, 170, 435)
+$g.DrawString('|-- Kategori finansial', $text, $dark, 140, 495)
+$g.DrawString('/kategori/finansial', $mono, $muted, 170, 520)
+$g.DrawString('|-- Kategori gaya hidup', $text, $dark, 140, 580)
+$g.DrawString('/kategori/gaya-hidup', $mono, $muted, 170, 605)
+$g.DrawString('|-- Kategori hiburan', $text, $dark, 140, 665)
+$g.DrawString('/kategori/hiburan', $mono, $muted, 170, 690)
+$g.DrawString('`-- Detail artikel', $text, $dark, 140, 760)
+$g.DrawString('/berita/:slug', $mono, $muted, 170, 785)
+$g.DrawString('Menampilkan thumbnail, sumber, dan video iframe.', $text, $muted, 110, 865)
+
+$g.DrawString('SISTEM REDAKSI', $heading, $blue, 850, 180)
+$g.DrawString('Login redaksi', $heading, $dark, 870, 235)
+$g.DrawString('/login', $mono, $muted, 870, 265)
+$g.DrawString('|', $text, $green, 900, 315)
+$g.DrawString('`-- Dashboard admin (sesi terproteksi)', $text, $dark, 900, 355)
+$g.DrawString('/admin', $mono, $muted, 930, 380)
+$g.DrawString('    |-- Buat berita', $text, $dark, 930, 450)
+$g.DrawString('/admin/berita/baru', $mono, $muted, 960, 475)
+$g.DrawString('    |-- Edit berita', $text, $dark, 930, 545)
+$g.DrawString('/admin/berita/:id/edit', $mono, $muted, 960, 570)
+$g.DrawString('    |-- Hapus berita', $text, $dark, 930, 640)
+$g.DrawString('Server Action', $mono, $muted, 960, 665)
+$g.DrawString('    `-- Keluar', $text, $dark, 930, 735)
+$g.DrawString('Hapus cookie sesi', $mono, $muted, 960, 760)
+$g.DrawString('Data: data/articles.json (mode lokal)', $text, $muted, 870, 865)
+
+$output = Join-Path -Path $PSScriptRoot -ChildPath '..\public\images\sitemap-portal-berita.jpg'
+$image.Save($output, [System.Drawing.Imaging.ImageFormat]::Jpeg)
+$g.Dispose()
+$image.Dispose()

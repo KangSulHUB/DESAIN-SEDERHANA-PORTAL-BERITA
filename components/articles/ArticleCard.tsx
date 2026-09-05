@@ -1,0 +1,6 @@
+import Link from "next/link";
+import type { Article } from "@/types/article";
+
+export function ArticleCard({ article }: { article: Article }) {
+  return <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"><div className="aspect-[16/8] bg-gradient-to-br from-orange-100 via-amber-50 to-slate-100">{article.thumbnailUrl ? <img src={article.thumbnailUrl} alt={article.thumbnailAlt} className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center text-5xl">📰</div>}</div><div className="p-5"><p className="mb-2 text-xs font-bold uppercase tracking-wider text-orange-600">{article.category}</p><h2 className="text-xl font-bold leading-tight text-slate-950"><Link href={`/berita/${article.slug}`} className="hover:text-orange-600">{article.title}</Link></h2><p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-600">{article.description}</p><div className="mt-5 flex items-center justify-between text-xs text-slate-500"><span>{article.author}</span><time dateTime={article.publishedAt}>{new Intl.DateTimeFormat("id-ID", { dateStyle: "medium" }).format(new Date(article.publishedAt))}</time></div></div></article>;
+}

@@ -1,0 +1,7 @@
+import type { ReactNode } from "react";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { logoutAction } from "@/app/actions/auth";
+import { isAdmin } from "@/lib/auth";
+
+export default async function AdminLayout({ children }: { children: ReactNode }) { if (!(await isAdmin())) redirect("/login"); return <div className="min-h-screen bg-slate-100 md:flex"><aside className="flex w-full flex-col bg-slate-950 p-5 text-slate-300 md:min-h-screen md:w-64"><Link href="/admin" className="text-xl font-black text-white">Berita<span className="text-orange-500">Fomo</span><span className="ml-2 text-xs font-semibold text-slate-400">CMS</span></Link><nav className="mt-10 flex gap-2 md:flex-col"><Link href="/admin" className="rounded-lg px-3 py-2 text-sm font-semibold hover:bg-slate-800 hover:text-white">Daftar berita</Link><Link href="/admin/berita/baru" className="rounded-lg bg-orange-600 px-3 py-2 text-sm font-bold text-white hover:bg-orange-700">+ Tulis berita</Link></nav><div className="mt-8 border-t border-slate-800 pt-5 md:mt-auto"><Link href="/" className="block px-3 py-2 text-sm hover:text-white">← Lihat situs publik</Link><form action={logoutAction}><button className="mt-2 w-full rounded-lg border border-slate-700 px-3 py-2 text-left text-sm font-semibold hover:border-slate-500 hover:text-white">Keluar</button></form></div></aside><main className="min-w-0 flex-1 p-5 md:p-10">{children}</main></div>; }
